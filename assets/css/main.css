@@ -1,0 +1,64 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+	.btn-primary {
+		@apply p-2 block text-center bg-white border border-white text-black rounded-xl text-sm w-full cursor-pointer duration-150;
+	}
+	.btn-primary:hover {
+		@apply bg-transparent text-white ;
+	}
+	.btn-primary-red {
+		@apply p-2 block text-center bg-red border border-red text-black rounded-xl text-sm w-full cursor-pointer duration-150;
+	}
+	.btn-primary-red:hover {
+		@apply bg-transparent text-white;
+	}
+	.btn-primary-green {
+		@apply p-2 block text-center bg-green border border-green text-black rounded-xl text-sm w-full cursor-pointer duration-150;
+	}
+	.btn-primary-green:hover {
+		@apply bg-transparent text-white;
+	}
+	.btn-secondary {
+		@apply p-2 block text-center bg-transparent border border-white rounded-xl text-sm w-full cursor-pointer duration-150;
+	}
+	.btn-secondary:hover {
+		@apply bg-white text-black;
+	}
+	.btn-secondary-red {
+		@apply p-2 block text-center bg-transparent border border-red text-red rounded-xl text-sm w-full cursor-pointer duration-150;
+	}
+	.btn-secondary-red:hover {
+		@apply bg-red text-black;
+	}
+	.btn-secondary-green {
+		@apply p-2 block text-center bg-transparent border border-green text-green rounded-xl text-sm w-full cursor-pointer;
+	}
+	.btn-secondary-green:hover {
+		@apply bg-green text-black;
+	}
+	.btn-primary, .btn-primary-green, .btn-primary-red {
+		@apply disabled:cursor-not-allowed disabled:text-darkapp disabled:bg-darkgrey
+	}
+	.btn-primary.disabled, .btn-primary-green.disabled, .btn-primary-red.disabled {
+		@apply cursor-not-allowed bg-darkapp text-darkgrey
+		/* @apply cursor-not-allowed text-darkapp bg-darkgrey */
+	}
+	.btn-secondary, .btn-secondary-green, .btn-secondary-red {
+		@apply disabled:cursor-not-allowed disabled:bg-darkapp disabled:text-darkgrey
+	}
+	.btn-secondary.disabled, .btn-secondary-green.disabled, .btn-secondary-red.disabled {
+		@apply cursor-not-allowed bg-darkapp text-darkgrey
+	}
+	/* h2 {
+		@apply text-2xl text-center;
+	} */
+	input, textarea {
+		@apply p-2 block text-black rounded-xl text-sm w-full cursor-pointer;
+	}
+	textarea {
+		@apply whitespace-pre-line
+	}
+}
