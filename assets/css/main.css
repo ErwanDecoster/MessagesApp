@@ -2,6 +2,34 @@
 @tailwind components;
 @tailwind utilities;
 
+html {
+  scroll-behavior: smooth;
+}
+*::-webkit-scrollbar {
+  height: 6px; 
+  width: 3px;
+}
+
+*::selection {
+  background: #5f90e390;
+}
+
+@media (prefers-color-scheme: dark) {
+  *::selection {
+    background: #2c5bab90;
+  }
+}
+
+/* Add a thumb */
+*::-webkit-scrollbar-thumb {
+  background: grey;
+  border-radius: 6px;
+}
+
+*::-webkit-scrollbar-track {
+  background: transparent;
+}
+
 @layer components {
 	.btn-primary {
 		@apply p-2 block text-center bg-black border border-black text-white rounded-lg text-sm w-full cursor-pointer duration-150;

@@ -12,12 +12,12 @@
           action=""
         >
           <div 
-            v-if="formMessages.length"
+            v-if="form.formMessages.length"
             class="grid gap-1"
           >
             <div 
-              v-for="formMessage in formMessages" 
-					    @click="formMessages.splice(formMessages.indexOf(message), 1)"
+              v-for="formMessage in form.formMessages" 
+					    @click="form.formMessages.splice(form.formMessages.indexOf(message), 1)"
               class="rounded-md px-2 py-0.5"
               :class="{ 'bg-red-500': formMessage.type == 'error', 'bg-green-500': formMessage.type == 'succes', 'bg-white': !formMessage.type }"
             >
@@ -25,20 +25,28 @@
             </div>
           </div>
           <div>
-            <label for="">Email :</label>
-            <input type="email" v-model="form.email" placeholder="example@gmail.com" name="" id="" autocomplete="email">
+            <label for="surname">Nom :</label>
+            <input type="text" v-model="form.surname" placeholder="Dupont" name="surname" id="surname" autocomplete="family-name">
           </div>
           <div>
-            <label for="">Télephone :</label>
-            <input type="tel" v-model="form.tel" placeholder="09 36 05 16 63" name="" id="" autocomplete="tel">
+            <label for="first_name">Prenom :</label>
+            <input type="text" v-model="form.first_name" placeholder="Jean" name="first_name" id="first_name" autocomplete="given-name">
           </div>
           <div>
-            <label for="">Mot de passe :</label>
-            <input type="password" v-model="form.password" name="" id="" autocomplete="new-password">
+            <label for="email">Email :</label>
+            <input type="email" v-model="form.email" placeholder="example@gmail.com" name="email" id="email" autocomplete="email">
           </div>
           <div>
-            <label for="">Comfirmation du mot de passe :</label>
-            <input type="password" v-model="form.passwordRetype" name="" id="" autocomplete="new-password">
+            <label for="tel">Télephone :</label>
+            <input type="tel" v-model="form.tel" placeholder="09 36 05 16 63" name="tel" id="tel" autocomplete="tel">
+          </div>
+          <div>
+            <label for="password">Mot de passe :</label>
+            <input type="password" v-model="form.password" name="password" id="password" autocomplete="new-password">
+          </div>
+          <div>
+            <label for="password-retype">Comfirmation du mot de passe :</label>
+            <input type="password" v-model="form.passwordRetype" name="password-retype" id="password-retype" autocomplete="new-password">
           </div>
           <input type="submit" class="btn-primary" name="" id="" value="S'inscrire">
         </form>
@@ -52,8 +60,10 @@
 export default {
   data() {
 	return {
-		formMessages: [],
-		form: {
+    form: {
+      formMessages: [],
+			surname: '',
+			first_name: '',
 			email: '',
 			tel: '',
 			password: '',
@@ -62,55 +72,91 @@ export default {
 	}
   },
   methods: {
-    CheckForm()
+    CheckForm(form)
     {
-      this.formMessages = []
-      if (!this.form.email)
-        this.formMessages.push({type: 'error', content: 'Le champ "E-mail" est requis'})
-      else if (!isValidEmail(this.form.email))
-        this.formMessages.push({type: 'error', content: "L'e-mail n'est pas valide"})
-      if (!this.form.tel)
-        this.formMessages.push({type: 'error', content: 'Le champ "Télephone " est requis.'})
-      else if (!isValidTel(this.form.tel))
-        this.formMessages.push({type: 'error', content: 'Le numéro de téléphone n\'est pas valide.'})
-      if (!this.form.password)
-        this.formMessages.push({type: 'error', content: 'Le champ "Mot de passe" est requis'})
-      else if (this.form.password.length < 6)
-        this.formMessages.push({type: 'error', content: 'Le Mot de passe doit contenir au moins 6 caracteres'})
-      if (!this.form.passwordRetype)
-        this.formMessages.push({type: 'error', content: 'Le champ "Confirmation du mot de passe" est requis'})
-      if (this.form.passwordRetype && this.form.password)
-        if (this.form.password !== this.form.passwordRetype)
-          this.formMessages.push({type: 'error', content: 'Les mots de passe ne correspondent pas' })
-      if (this.formMessages.length == 0)
+      form.formMessages = []
+      if (!form.surname)
+        form.formMessages.push({type: 'error', content: 'Le champ "Nom" est requis'})
+      if (!form.first_name)
+        form.formMessages.push({type: 'error', content: 'Le champ "Prenom" est requis'})
+      if (!form.email)
+        form.formMessages.push({type: 'error', content: 'Le champ "E-mail" est requis'})
+      else if (!isValidEmail(form.email))
+        form.formMessages.push({type: 'error', content: "L'e-mail n'est pas valide"})
+      if (!form.tel)
+        form.formMessages.push({type: 'error', content: 'Le champ "Télephone " est requis.'})
+      else if (!isValidTel(form.tel))
+        form.formMessages.push({type: 'error', content: 'Le numéro de téléphone n\'est pas valide.'})
+      if (!form.password)
+        form.formMessages.push({type: 'error', content: 'Le champ "Mot de passe" est requis'})
+      else if (form.password.length < 6)
+        form.formMessages.push({type: 'error', content: 'Le Mot de passe doit contenir au moins 6 caracteres'})
+      if (!form.passwordRetype)
+        form.formMessages.push({type: 'error', content: 'Le champ "Confirmation du mot de passe" est requis'})
+      if (form.passwordRetype && form.password)
+        if (form.password !== form.passwordRetype)
+          form.formMessages.push({type: 'error', content: 'Les mots de passe ne correspondent pas' })
+      if (form.formMessages.length == 0)
         return (0)
       return (1)
     },
-    async SignUp() {
+    async PostUserTel(user_id, surname, first_name, tel) {
+      try {
+    		const supabase = useSupabaseClient();
+        const { data, error } = await supabase
+          .from('user_data')
+          .insert([
+            { 
+              user_id: user_id, 
+              surname: surname, 
+              first_name: first_name, 
+              tel: tel 
+            },
+          ])
+          .select()
+          if (error) throw error
+    	} catch (error) {
+    		this.form.formMessages.push({type: 'error', content: error })
+    	}
+    },
+    async SignUp(email, password) {
     	try {
     		const supabase = useSupabaseClient();
     		let { data, error } = await supabase.auth.signUp({
-    			email: this.form.email,
-    			password: this.form.password
+    			email: email,
+    			password: password
     		})
     		if (error) throw error
     	} catch (error) {
-    		this.formMessages.push({type: 'error', content: error })
+    		this.form.formMessages.push({type: 'error', content: error })
     	}
     }, 
     Register()
     {
-      if (this.CheckForm())
+      if (this.CheckForm(this.form))
         return (1);
-      this.SignUp();
+      this.SignUp(
+        this.form.email, 
+        this.form.password, 
+      ).then(() => {
+        const user = useSupabaseUser();
+        this.PostUserTel(
+          user.value.id, 
+          this.form.surname, 
+          this.form.first_name, 
+          formatTel(this.form.tel)
+        ).then(() => {
+          navigateTo('/messages');
+        })
+      });
     }
   },
   mounted() {
-    const user = useSupabaseUser();
-    watchEffect(() => {
-      if (user.value)
-        navigateTo('/messages');
-    })
+    // const user = useSupabaseUser();
+    // watchEffect(() => {
+    //   if (user.value)
+    //     navigateTo('/messages');
+    // })
   },
 }
 </script>

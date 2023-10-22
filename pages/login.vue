@@ -12,12 +12,12 @@
           action=""
         >
           <div 
-            v-if="formMessages.length"
+            v-if="form.formMessages.length"
             class="grid gap-1"
           >
             <div 
-              v-for="formMessage in formMessages" 
-					    @click="formMessages.splice(formMessages.indexOf(message), 1)"
+              v-for="formMessage in form.formMessages" 
+					    @click="form.formMessages.splice(form.formMessages.indexOf(message), 1)"
               class="rounded-md px-2 py-0.5"
               :class="{ 'bg-red-500': formMessage.type == 'error', 'bg-green-500': formMessage.type == 'succes', 'bg-white': !formMessage.type }"
             >
@@ -44,31 +44,31 @@
 export default {
   data() {
 	return {
-		formMessages: [],
-		form: {
+    form: {
+      formMessages: [],
 			email: '',
 			password: '',
 		}
 	}
   },
   methods: {
-    CheckForm()
+    CheckForm(form)
     {
-      this.formMessages = []
-      if (!this.form.email)
-        this.formMessages.push({type: 'error', content: 'Le champ "E-mail" est requis'})
-      if (!this.form.password)
-        this.formMessages.push({type: 'error', content: 'Le champ "Mot de passe" est requis'})
-      if (this.formMessages.length == 0)
+      form.formMessages = []
+      if (!form.email)
+        form.formMessages.push({type: 'error', content: 'Le champ "E-mail" est requis'})
+      if (!form.password)
+        form.formMessages.push({type: 'error', content: 'Le champ "Mot de passe" est requis'})
+      if (form.formMessages.length == 0)
         return (0)
       return (1)
     },
-    async SignIn() {
+    async SignIn(email, password) {
 			try {
 				const supabase = useSupabaseClient();
 				let { data, error } = await supabase.auth.signInWithPassword({
-					email: this.form.email,
-					password: this.form.password
+					email: email,
+					password: password
 				})
 				if (error) throw error
 			} catch (error) {
@@ -77,9 +77,12 @@ export default {
     },
     async Login()
     {
-      if (this.CheckForm())
+      if (this.CheckForm(this.form))
         return (1);
-      this.SignIn();
+      this.SignIn(
+        this.form.email,
+        this.form.password
+      );
     }
   },
   mounted() {
