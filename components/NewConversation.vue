@@ -61,7 +61,6 @@ export default {
       if (this.CheckForm(this.form))
         return (0)
       this.FetchDataUserByTel(this.form.tel).then((userValue) => {
-        console.log(userValue);
         if (userValue) {
           this.form.formMessages.push({type: 'succes', content: 'Debug: User find'})
           this.PostConversation().then((conversationValue) => {

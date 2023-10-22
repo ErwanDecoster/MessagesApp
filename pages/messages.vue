@@ -153,7 +153,6 @@ export default {
         'postgres_changes',
         { event: '*', schema: 'public', table: 'messages' },
         (payload) => {
-          console.log('payload', payload);
           this.UpdateConversationMessage(payload.eventType, payload.new, payload.old)
         }
       )
@@ -184,7 +183,6 @@ export default {
         'postgres_changes',
         { event: '*', schema: 'public', table: 'conversations' },
         (payload) => {
-          console.log('Change received!', payload)
           this.UpdateConversation(payload.eventType, payload.new, payload.old)
         }
       )
@@ -205,7 +203,6 @@ export default {
         'postgres_changes',
         { event: '*', schema: 'public', table: 'participants' },
         (payload) => {
-          console.log('Change received!', payload)
           this.UpdateConversationParticipant(payload.eventType, payload.new, payload.old)
         }
       )

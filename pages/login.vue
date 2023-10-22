@@ -25,14 +25,14 @@
             </div>
           </div>
           <div>
-            <label for="">Email :</label>
-            <input type="email" v-model="form.email" name="" id="" autocomplete="email">
+            <label for="email">Email :</label>
+            <input type="email" v-model="form.email" name="email" id="email" autocomplete="email">
           </div>
           <div>
-            <label for="">Mot de passe :</label>
-            <input type="password" v-model="form.password" name="" id="" autocomplete="current-password">
+            <label for="password">Mot de passe :</label>
+            <input type="password" v-model="form.password" name="password" id="password" autocomplete="current-password">
           </div>
-          <input type="submit" class="btn-primary" name="" id="" value="Se connecter">
+          <input type="submit" class="btn-primary" name="submit" id="submit" value="Se connecter">
         </form>
         <NuxtLink to="/register" class="btn-secondary" >Crée un compte</NuxtLink>
       </div>
