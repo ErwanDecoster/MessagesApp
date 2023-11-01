@@ -320,18 +320,19 @@ export default {
       yesterdayTimestamp.setDate(new Date().getDate() - 1)
       yesterdayTimestamp = yesterdayTimestamp.getTime()
       
-      console.log(messages);
+      // console.log(messages);
 
 
-      while (i < messages.length - 1) {
-        console.log(i);
+      while (i < messages.length) {
+        console.log(messages.length);
+        // console.log(i);
         let messageDate = new Date(messages[i].created_at)
         let messageTimestamp = messageDate.getTime()
         
-        console.log('actualDayTimestamp:', actualDayTimestamp);
-        console.log('yesterdayTimestamp:', yesterdayTimestamp);
-        console.log('messageTimestamp:', messageTimestamp);
-        console.log('messageDate:', messageDate);
+        // console.log('actualDayTimestamp:', actualDayTimestamp);
+        // console.log('yesterdayTimestamp:', yesterdayTimestamp);
+        // console.log('messageTimestamp:', messageTimestamp);
+        // console.log('messageDate:', messageDate);
         
         if (timeline.length > 0) {
           const previousMessageDate = new Date(timeline[i - 1].date)
@@ -340,9 +341,9 @@ export default {
           const actualMessageHoursWithoutDif = messageDate.getHours() - dif
           if (actualMessageHoursWithoutDif >= 0)
             actualMessageWithoutDif.setHours(actualMessageHoursWithoutDif)
-          console.log('actualMessageWithoutDif:', actualMessageWithoutDif);
-          console.log('previousMessageDate', previousMessageDate);
-          if ((previousMessageDate.getHours() - actualMessageWithoutDif.getHours()) > dif)
+          // console.log('actualMessageWithoutDif:', actualMessageWithoutDif);
+          // console.log('previousMessageDate', previousMessageDate);
+          if (previousMessageDate < actualMessageWithoutDif)
           {
             if (actualDayTimestamp < messageTimestamp)
               timeline.push({ timeString: timeToString(messageDate), date: messageDate })
@@ -353,12 +354,13 @@ export default {
         else {
           if (actualDayTimestamp < messageTimestamp)
             timeline.push({ timeString: timeToString(messageDate), date: messageDate })
-          else if (yesterdayTimestamp < messageTimestamp)
+          else
             timeline.push({ timeString: formatDate(messageDate), date: messageDate })
         }
         messages[i].date = messageTimestamp
         timeline.push(messages[i])
-        console.log(timeline);
+        // console.log(timeline);
+        // console.log(timeline.length);
         i++;
       }
       return (timeline)
@@ -372,11 +374,12 @@ export default {
     this.ParticipantUpdate()
     this.FetchConversations().then((conversations) => {
       conversations.forEach((conversation) => {
+        console.log(conversation);
         conversation.messages = this.CreateMessagesTimeline(conversation.messages)
-        
+        console.log(conversation);
       })
       this.conversations = conversations
-      console.log(conversations);
+      // console.log(conversations);
     })
     // watchEffect(() => {
     //   if (!user.value)

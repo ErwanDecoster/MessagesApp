@@ -45,12 +45,9 @@ export default {
     }
   },
   mounted() {
-    console.log(this.message);
-    // Update if message not sended by actual user 
     if (this.message.send_user_id != this.user.id)
       if (!this.message.seen_at)
         this.UpdateMessageSeen()
-    // if (!this.message.seen_at)
   },
 }
 </script>
