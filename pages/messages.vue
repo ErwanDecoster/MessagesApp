@@ -246,6 +246,7 @@ export default {
               *
             )
           `)
+          // .eq('participants.user_id', user.value.id)
           .neq('participants.user_id', user.value.id)
           .order('id', { foreignTable: 'messages', ascending: true })
           if (error) throw error
@@ -377,10 +378,10 @@ export default {
       this.conversations = conversations
       console.log(conversations);
     })
-    watchEffect(() => {
-      if (!user.value)
-        navigateTo('/');
-    })
+    // watchEffect(() => {
+    //   if (!user.value)
+    //     navigateTo('/');
+    // })
   },
 }
 </script>

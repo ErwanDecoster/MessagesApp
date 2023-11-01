@@ -61,14 +61,16 @@ export default {
       if (this.CheckForm(this.form))
         return (0)
       this.FetchDataUserByTel(this.form.tel).then((userValue) => {
+        console.log(userValue);
+        const uuid = self.crypto.randomUUID()
         if (userValue) {
           this.form.formMessages.push({type: 'succes', content: 'Debug: User find'})
-          this.PostConversation().then((conversationValue) => {
+          this.PostConversation(uuid).then(() => {
             this.form.formMessages.push({type: 'succes', content: 'Debug: conversation post'})
             const user = useSupabaseUser();
             this.PostParticipant(
               userValue.user_id,
-              conversationValue.id,
+              uuid,
               userValue.first_name,
               userValue.surname,
             ).then(() => {
@@ -76,7 +78,7 @@ export default {
             })
             this.PostParticipant(
               user.value.id,
-              conversationValue.id,
+              uuid,
               this.dataUser.first_name,
               this.dataUser.surname
             ).then(() => {
@@ -102,24 +104,25 @@ export default {
               surname: surname
             },
           ])
-          .select()
           if (error) throw error
-          return(data)
+          // return(data)
     	} catch (error) {
     		this.form.formMessages.push({type: 'error', content: error })
     	}
     },
-    async PostConversation() {
+    async PostConversation(uuid) {
       try {
     		const supabase = useSupabaseClient();
         const { data: conversation, error } = await supabase
           .from('conversations')
           .insert([
-            { type: 0 },
+            { 
+              id: uuid,
+              type: 0 
+            },
           ])
-          .select()
           if (error) throw error
-          return(conversation[0])
+          // return(conversation[0])
     	} catch (error) {
     		this.form.formMessages.push({type: 'error', content: error })
     	}
@@ -136,6 +139,7 @@ export default {
 				.eq('discoverable', true)
 				.neq('user_id', user.value.id)
 				if (error) throw error
+        console.log(dataUser);
         return(dataUser[0])
 			} catch (error) {
 				this.form.formMessages.push({ type: 'error', content: error })
