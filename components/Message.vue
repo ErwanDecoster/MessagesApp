@@ -4,16 +4,16 @@
     :class="{ 'items-end': message.send_user_id == user.id }"
     @click="active = !active"
   >
-    <p v-if="active" class="text-sm text-white">
+    <p v-if="active" class="text-sm text-slate-600">
       {{ formatDate(message.created_at) }}
     </p>
     <p 
-      class="py-1 px-2 rounded-lg break-words w-fit max-w-sm"
-      :class="{ 'bg-[#E7D7C1]': message.send_user_id == user.id, 'bg-white': message.send_user_id != user.id}"
+      class="py-1 blur-sm px-2 rounded-lg break-words w-fit max-w-sm"
+      :class="{ 'bg-[#0a9396]': message.send_user_id == user.id, 'bg-slate-200': message.send_user_id != user.id}"
     >
       {{ message.content }}
     </p>
-    <p v-if="message.seen_at && active" class="text-sm text-white">
+    <p v-if="message.seen_at && active" class="text-sm text-slate-600">
       Lu à {{ formatDate(message.seen_at) }}
     </p>
   </div>

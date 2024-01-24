@@ -1,10 +1,10 @@
 <template>
-  <div class="flex flex-col pt-12 gap-12 sm:pt-0 sm:grid sm:grid-cols-2 min-h-[calc(100vh-2rem)]">
+  <div class="max-w-4xl mx-auto flex flex-col pt-12 gap-12 sm:pt-0 sm:grid sm:grid-cols-2 min-h-[calc(100vh-2rem)]">
     <div class="flex flex-col justify-center items-center">
-      <NuxtLink to="/" class="text-2xl text-left text-[#E7D7C1] font-bold">Messages App</NuxtLink>
+      <NuxtLink to="/" class="text-2xl text-left text-[#0a9396] font-bold">Messages App</NuxtLink>
     </div>
     <div class="flex flex-col justify-center items-center">
-      <div class="bg-[#E7D7C1] rounded-3xl p-4 grid gap-2 max-w-sm w-full">
+      <div class="bg-[#0a9396] rounded-3xl p-4 grid gap-2 max-w-sm w-full">
         <h1 class="text-xl text-left">Inscription</h1>
         <form 
           @submit.prevent="Register()" 

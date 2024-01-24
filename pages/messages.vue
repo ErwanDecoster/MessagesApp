@@ -1,5 +1,5 @@
 <template>
-  <div class="rounded-3xl bg-[#E7D7C1] h-[calc(100vh-2rem)] grid">
+  <div class="m-4 rounded-3xl bg-[#0a9396] h-[calc(100vh-2rem)] grid">
     <NewConversation 
       @close="newConversationModal = false"
       v-if="newConversationModal" />
@@ -31,7 +31,7 @@
             <div 
               @click="DisableOtherConversations(conversation)"
               v-for="conversation in conversations" 
-              class="btn-primary text-left"
+              class="btn-primary text-left blur-sm"
             >
               <h3 v-if="conversation.participants[0]" class="text-lg">
                 {{ conversation.participants[0].first_name }}
@@ -43,7 +43,7 @@
             </div>
           </div>
         </div>
-        <!-- class="p-2 mr-2 mb-2 col-span-5 rounded-2xl flex flex-col bg-black gap-4 w-full h-[calc(100vh-2rem-0.5rem-70px)]" -->
+        <!-- class="p-2 mr-2 mb-2 col-span-5 rounded-2xl flex flex-col bg-white gap-4 w-full h-[calc(100vh-2rem-0.5rem-70px)]" -->
         <div 
           v-for="conversation in conversations" 
           :key="conversation"
@@ -53,15 +53,15 @@
         >
           <div
             v-if="conversation.active"
-            class="p-2 relative  rounded-2xl flex flex-col justify-between gap-2 bg-black w-full h-[calc(100vh-2rem-1rem-70px)] overflow-hidden"
+            class="p-2 relative  rounded-2xl flex flex-col justify-between gap-2 bg-white w-full h-[calc(100vh-2rem-1rem-70px)] overflow-hidden"
           >
-            <div class="rounded-lg bg-[#E7D7C1] backdrop-blur-lg z-10 bg-opacity-75 absolute inset-x-2 p-2">
+            <div class="rounded-lg bg-[#0a9396] backdrop-blur-lg z-10 bg-opacity-75 absolute inset-x-2 p-2">
               <h3 v-if="conversation.participants[0]" class="text-lg text-center">
                 {{ conversation.participants[0].first_name }}
                 {{ conversation.participants[0].surname }}
               </h3>
             </div>
-            <span class="absolute w-1 h-14 top-0 right-1 bg-black z-10"></span>
+            <span class="absolute w-1 h-14 top-0 right-1 bg-white z-10"></span>
             <div class="grow flex flex-col-reverse gap-1 rounded-lg pt-12 -mr-1 pr-1 overflow-y-scroll relative">
               <div
                 v-for="timelineElem in conversation.messages.slice().reverse()"
@@ -85,9 +85,9 @@
               class="rounded-lg flex gap-2"
             >
               <div class="grow">
-                <input type="text" v-model="form.message" placeholder="Nouveau message" name="" id="">
+                <input class="text-black border border-black first-letter:uppercase" type="text" v-model="form.message" placeholder="Nouveau message" name="" id="">
               </div>
-              <input class="w-fit px-6 bg-[#E7D7C1] text-black hover:text-white hover:border hover:border-white btn-primary" type="submit" value="Envoyer">
+              <input class="w-fit px-6 bg-[#0a9396] text-black hover:border hover:border-black hover:text-black btn-primary" type="submit" value="Envoyer">
             </form>
           </div>
         </div>

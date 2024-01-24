@@ -1,9 +1,9 @@
 <template>
   <div 
     @click.self="$emit('close')"
-    class="fixed z-30 inset-0 bg-black bg-opacity-30 grid justify-center items-center"
+    class="fixed z-30 inset-0 bg-white bg-opacity-30 grid justify-center items-center"
   >
-    <div class="bg-[#E7D7C1] h-fit w-fit p-4 grid gap-2 max-w-sm rounded-3xl">
+    <div class="bg-[#0a9396] h-fit w-fit p-4 grid gap-2 max-w-sm rounded-3xl">
       <h1 class="text-xl text-left">Nouvelle conversation</h1>
       <form 
         @submit.prevent="NewConversation()" 
